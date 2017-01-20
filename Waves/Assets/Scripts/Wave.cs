@@ -12,7 +12,7 @@ public class Wave : MonoBehaviour
     public Transform LettersParent;
     public AnimationCurve WaveRailShape;
 
-    public void Start()
+    public void Init()
     {
         currentIndex = 0;
         moveAmountPerSecond = Screen.width * 0.5f * 0.1f;
@@ -38,9 +38,9 @@ public class Wave : MonoBehaviour
 
     public void Reset()
     {
-        foreach(var l in letters)
+        foreach(var letter in letters)
         {
-            Destroy(l.gameObject);
+            Destroy(letter.gameObject);
         }
         letters.Clear();
         currentIndex = 0;

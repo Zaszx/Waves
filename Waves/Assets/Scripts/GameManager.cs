@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     {
         Globals.Init();
         inputManager.Init();
-
+        wave.Init();
     }
 	
 	void Update ()
