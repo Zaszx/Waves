@@ -2,20 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LetterStatus
+{
+    TBD,
+    Success,
+    Fail,
+}
+
 public class Letter : MonoBehaviour
 {
     public KeyCode key;
     public bool isJoker;
+    LetterStatus status;
 
-    public void SetKet(KeyCode key)
+
+    public void SetKey(KeyCode key)
     {
         this.key = key;
-        OnImageUpdated();
+        UpdateImage();
     }
 
 	void Start ()
     {
-		
+        status = LetterStatus.TBD;
 	}
 	
 	void Update ()
@@ -23,7 +32,18 @@ public class Letter : MonoBehaviour
 		
 	}
 
-    public void OnImageUpdated()
+    public void SetStatus(LetterStatus newStatus)
+    {
+        status = newStatus;
+        UpdateImage();
+    }
+
+    public LetterStatus GetStatus()
+    {
+        return status;
+    }
+
+    void UpdateImage()
     {
 
     }

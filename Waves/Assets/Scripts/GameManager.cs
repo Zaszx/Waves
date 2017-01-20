@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
     {
-        Globals.isPlayerOneTurn = true;
+        Globals.Init();
         inputManager.Init();
 
     }
@@ -24,18 +24,20 @@ public class GameManager : MonoBehaviour
         }
 
         InputResult result = inputManager.GetInputResult(wave.GetNextKey());
-        if(result == InputResult.Correct)
-        {
-            wave.currentIndex++;
-        }
-        else if(result == InputResult.Wrong)
-        {
+        wave.HandleInputResult(result);
 
-        }
+
 
         if(wave.CheckKeysSuccess())
         {
-            wave.Reverse(KeyCode.W);
+            if(Globals.isPlayerOneTurn)
+            {
+                wave.Reverse(KeyCode.W);
+            }
+            else
+            {
+                wave.Reverse(KeyCode.UpArrow);
+            }
             Globals.isPlayerOneTurn = !Globals.isPlayerOneTurn;
         }
 

@@ -59,6 +59,16 @@ public class Wave : MonoBehaviour
         newLetter.transform.parent = this.transform;
         newLetter.key = newKeyCode;
         letters.Add(newLetter);
+
+        foreach(Letter l in letters)
+        {
+            l.SetStatus(LetterStatus.TBD);
+            if(l.isJoker == false)
+            {
+                l.SetKey(Globals.keyCodePairs[l.key]);
+            }
+        }
+
         UpdateLetterPositions();
     }
 
@@ -70,6 +80,23 @@ public class Wave : MonoBehaviour
     public KeyCode GetNextKey()
     {
         return letters[currentIndex].key;
+    }
+
+    public void HandleInputResult(InputResult inputResult)
+    {
+        Letter currentLetter = letters[currentIndex];
+
+        if (inputResult == InputResult.Correct)
+        {
+            currentLetter.SetStatus(LetterStatus.Success);
+
+            currentIndex++;
+        }
+        else if (inputResult == InputResult.Wrong)
+        {
+            currentLetter.SetStatus(LetterStatus.Fail);
+
+        }
     }
 
     public bool CheckKeysSuccess()
