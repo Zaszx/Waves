@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum LetterStatus
 {
@@ -13,35 +14,53 @@ public class Letter : MonoBehaviour
 {
     public KeyCode key;
     public bool isJoker;
-    LetterStatus status;
+    public LetterStatus Status { get; private set; }
 
+    public Image ForegroundImage;
+    public Image BackgroundImage;
 
-    public void SetKey(KeyCode key)
+    public Sprite UpImage;
+    public Sprite DownImage;
+    public Sprite LeftImage;
+    public Sprite RightImage;
+
+    public void SetKey(KeyCode k)
     {
-        this.key = key;
+        key = k;
+
+        switch (k)
+        {
+            case KeyCode.W:
+                ForegroundImage.sprite = UpImage;
+                break;
+            case KeyCode.A:
+                ForegroundImage.sprite = LeftImage;
+                break;
+            case KeyCode.S:
+                ForegroundImage.sprite = DownImage;
+                break;
+            case KeyCode.D:
+                ForegroundImage.sprite = RightImage;
+                break;
+
+        }
+    }
+
+    public void SetStatus(LetterStatus s)
+    {
+        Status = s;
         UpdateImage();
     }
 
 	void Start ()
     {
-        status = LetterStatus.TBD;
+        Status = LetterStatus.TBD;
 	}
 	
 	void Update ()
     {
 		
 	}
-
-    public void SetStatus(LetterStatus newStatus)
-    {
-        status = newStatus;
-        UpdateImage();
-    }
-
-    public LetterStatus GetStatus()
-    {
-        return status;
-    }
 
     void UpdateImage()
     {

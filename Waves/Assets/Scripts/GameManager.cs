@@ -5,7 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Wave wave;
+    public Ui Ui;
     private readonly InputManager inputManager = new InputManager();
+
 
 	void Start ()
     {
@@ -18,9 +20,10 @@ public class GameManager : MonoBehaviour
     {
         wave.Tick();
 
-        if(wave.CheckLose())
+	    bool isPlayerOneWinner;
+        if(wave.CheckLose(out isPlayerOneWinner))
         {
-
+            Ui.GameOver(isPlayerOneWinner);
         }
 
         var result = inputManager.GetInputResult(wave.GetNextKey());

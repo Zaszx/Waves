@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class Wave : MonoBehaviour
     
     // UI
     public Transform LettersParent;
-    public AnimationCurve WaveRailShape;
+    public AnimationCurve WaveRailShape; // maybe..
 
     public void Init()
     {
@@ -27,12 +28,19 @@ public class Wave : MonoBehaviour
         transform.position += moveAmountThisFrame * Vector3.right;
     }
 
-    public bool CheckLose()
+    public bool CheckLose(out bool isPlayerOneWinner)
     {
-        if(transform.position.x < 0 || transform.position.x > Screen.width)
+        if(transform.position.x < 0)
         {
+            isPlayerOneWinner = false;
             return true;
         }
+        else if (transform.position.x > Screen.width)
+        {
+            isPlayerOneWinner = true;
+            return true;
+        }
+        isPlayerOneWinner = false;
         return false;
     }
 
@@ -45,23 +53,16 @@ public class Wave : MonoBehaviour
         letters.Clear();
         currentIndex = 0;
 
-        var newLetter = Instantiate(Prefabs.letter).GetComponent<Letter>();
-        newLetter.isJoker = false;
-        newLetter.transform.SetParent(LettersParent);
-        newLetter.key = KeyCode.W;
-        letters.Add(newLetter);
+        CreateLetterWith(KeyCode.W);
     }
 
     public void Reverse(KeyCode newKeyCode)
     {
         currentIndex = 0;
-        var newLetter = Instantiate(Prefabs.letter).GetComponent<Letter>();
-        newLetter.isJoker = false;
-        newLetter.transform.SetParent(LettersParent);
-        newLetter.key = newKeyCode;
-        letters.Add(newLetter);
 
-        foreach(var letter in letters)
+        CreateLetterWith(newKeyCode);
+
+        foreach (var letter in letters)
         {
             letter.SetStatus(LetterStatus.TBD);
             if(!letter.isJoker)
@@ -69,7 +70,15 @@ public class Wave : MonoBehaviour
                 letter.SetKey(Globals.keyCodePairs[letter.key]);
             }
         }
+    }
 
+    private void CreateLetterWith(KeyCode keyCode)
+    {
+        var newLetter = Instantiate(Prefabs.letter).GetComponent<Letter>();
+        newLetter.isJoker = false;
+        newLetter.transform.SetParent(LettersParent);
+        newLetter.key = keyCode;
+        letters.Add(newLetter);
     }
 
     public KeyCode GetNextKey()
@@ -84,13 +93,11 @@ public class Wave : MonoBehaviour
         if (inputResult == InputResult.Correct)
         {
             currentLetter.SetStatus(LetterStatus.Success);
-
             currentIndex++;
         }
         else if (inputResult == InputResult.Wrong)
         {
             currentLetter.SetStatus(LetterStatus.Fail);
-
         }
     }
 
