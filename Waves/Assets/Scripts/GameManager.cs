@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Wave wave;
-    InputManager inputManager = new InputManager();
+    private readonly InputManager inputManager = new InputManager();
 
 	void Start ()
     {
@@ -23,10 +23,8 @@ public class GameManager : MonoBehaviour
 
         }
 
-        InputResult result = inputManager.GetInputResult(wave.GetNextKey());
+        var result = inputManager.GetInputResult(wave.GetNextKey());
         wave.HandleInputResult(result);
-
-
 
         if(wave.CheckKeysSuccess())
         {

@@ -7,9 +7,10 @@ public class Wave : MonoBehaviour
     public List<Letter> letters = new List<Letter>();
     public int currentIndex;
     public float moveAmountPerSecond;
-
-
-
+    
+    // UI
+    public Transform LettersParent;
+    public AnimationCurve WaveRailShape;
 
     public void Start()
     {
@@ -21,9 +22,9 @@ public class Wave : MonoBehaviour
 
     public void Tick()
     {
-        float moveAmountThisFrame = moveAmountPerSecond * Time.deltaTime;
+        var moveAmountThisFrame = moveAmountPerSecond * Time.deltaTime;
         moveAmountThisFrame *= Globals.isPlayerOneTurn ? 1 : -1;
-        GetComponent<RectTransform>().position += moveAmountThisFrame * Vector3.right;
+        transform.position += moveAmountThisFrame * Vector3.right;
     }
 
     public bool CheckLose()
@@ -37,16 +38,16 @@ public class Wave : MonoBehaviour
 
     public void Reset()
     {
-        foreach(Letter l in letters)
+        foreach(var l in letters)
         {
-            GameObject.Destroy(l.gameObject);
+            Destroy(l.gameObject);
         }
         letters.Clear();
         currentIndex = 0;
 
-        Letter newLetter = GameObject.Instantiate(Prefabs.letter).GetComponent<Letter>();
+        var newLetter = Instantiate(Prefabs.letter).GetComponent<Letter>();
         newLetter.isJoker = false;
-        newLetter.transform.parent = this.transform;
+        newLetter.transform.SetParent(LettersParent);
         newLetter.key = KeyCode.W;
         letters.Add(newLetter);
     }
@@ -54,26 +55,20 @@ public class Wave : MonoBehaviour
     public void Reverse(KeyCode newKeyCode)
     {
         currentIndex = 0;
-        Letter newLetter = GameObject.Instantiate(Prefabs.letter).GetComponent<Letter>();
+        var newLetter = Instantiate(Prefabs.letter).GetComponent<Letter>();
         newLetter.isJoker = false;
-        newLetter.transform.parent = this.transform;
+        newLetter.transform.SetParent(LettersParent);
         newLetter.key = newKeyCode;
         letters.Add(newLetter);
 
-        foreach(Letter l in letters)
+        foreach(var letter in letters)
         {
-            l.SetStatus(LetterStatus.TBD);
-            if(l.isJoker == false)
+            letter.SetStatus(LetterStatus.TBD);
+            if(!letter.isJoker)
             {
-                l.SetKey(Globals.keyCodePairs[l.key]);
+                letter.SetKey(Globals.keyCodePairs[letter.key]);
             }
         }
-
-        UpdateLetterPositions();
-    }
-
-    public void UpdateLetterPositions()
-    {
 
     }
 
@@ -84,7 +79,7 @@ public class Wave : MonoBehaviour
 
     public void HandleInputResult(InputResult inputResult)
     {
-        Letter currentLetter = letters[currentIndex];
+        var currentLetter = letters[currentIndex];
 
         if (inputResult == InputResult.Correct)
         {
