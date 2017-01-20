@@ -34,4 +34,26 @@ public class GameManager : MonoBehaviour
 
 
 	}
+    
+    void HandleInputResult(InputResult result)
+    {
+        if(result.inputResultState == InputResultState.Correct)
+        {
+            wave.HandleSuccessInput();
+        }
+        else if(result.inputResultState == InputResultState.Wrong)
+        {
+            wave.HandleFailedInput();
+            StartCoroutine(OnFailedInput());
+        }
+    }
+
+    public IEnumerator OnFailedInput()
+    {
+        inputManager.isResponsive = false;
+        yield return new WaitForSeconds(1.0f);
+        wave.ResetAfterFailedKey();
+        inputManager.isResponsive = true;
+    }
+
 }

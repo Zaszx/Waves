@@ -6,6 +6,9 @@ using UnityEngine;
 public class InputManager
 {
     public Dictionary<bool, List<KeyCode>> validKeyCodes = new Dictionary<bool, List<KeyCode>>();
+
+    public bool isResponsive;
+
     public void Init()
     {
         List<KeyCode> validKeysForPlayerOne = new List<KeyCode>();
@@ -23,6 +26,8 @@ public class InputManager
         validKeysForPlayerTwo.Add(KeyCode.RightArrow);
 
         validKeyCodes[false] = validKeysForPlayerTwo;
+
+        isResponsive = true;
     }
 
     public void Tick()
@@ -32,6 +37,10 @@ public class InputManager
 
     public InputResult GetInputResult(KeyCode expectedKey, bool isJoker)
     {
+        if(isResponsive == false)
+        {
+            return new InputResult(InputResultState.Blank, KeyCode.Space);
+        }
         if(Input.GetKeyDown(expectedKey))
         {
             return new InputResult(InputResultState.Correct, expectedKey);

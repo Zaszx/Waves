@@ -100,6 +100,29 @@ public class Wave : MonoBehaviour
         }
     }
 
+    public void ResetAfterFailedKey()
+    {
+        currentIndex = 0;
+        foreach(Letter l in letters)
+        {
+            l.SetStatus(LetterStatus.TBD);
+        }
+    }
+
+    public void HandleSuccessInput()
+    {
+        var currentLetter = letters[currentIndex];
+        currentLetter.SetStatus(LetterStatus.Success);
+
+        currentIndex++;
+    }
+
+    public void HandleFailedInput()
+    {
+        var currentLetter = letters[currentIndex];
+        currentLetter.SetStatus(LetterStatus.Fail);
+    }
+
     public bool CheckKeysSuccess()
     {
         if(currentIndex == letters.Count)
