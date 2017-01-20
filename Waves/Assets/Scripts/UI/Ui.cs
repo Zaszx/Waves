@@ -18,7 +18,7 @@ public class Ui : MonoBehaviour
     public void GameOver(bool isPlayerOneWinner)
     {
         GameOverPanel.SetActive(true);
-        WinnerText.text = isPlayerOneWinner ? "WINNER: PLAYER 2'YE GITDI" : "WINNER: PLAYER 1'2 GIRDI";
+        WinnerText.text = isPlayerOneWinner ? "SAĞDAKİNE GIRDI" : "SOLDAKİNE GIRDI";
         StartCoroutine(WaitAndEnableRestart());
     }
 

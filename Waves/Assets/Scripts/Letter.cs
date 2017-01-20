@@ -24,9 +24,17 @@ public class Letter : MonoBehaviour
     public Sprite LeftImage;
     public Sprite RightImage;
 
+    void Start()
+    {
+        Status = LetterStatus.TBD;
+        BackgroundImage.color = Color.magenta;
+    }
+
     public void SetKey(KeyCode k)
     {
         key = k;
+
+        isJoker = false;
 
         switch (k)
         {
@@ -49,21 +57,18 @@ public class Letter : MonoBehaviour
     public void SetStatus(LetterStatus s)
     {
         Status = s;
-        UpdateImage();
-    }
-
-	void Start ()
-    {
-        Status = LetterStatus.TBD;
-	}
-	
-	void Update ()
-    {
-		
-	}
-
-    void UpdateImage()
-    {
+        if (s == LetterStatus.Success)
+        {
+            BackgroundImage.color = Color.green;
+        }
+        else if (s == LetterStatus.Fail)
+        {
+            BackgroundImage.color = Color.red;
+        }
+        else
+        {
+            BackgroundImage.color = Color.clear;
+        }
 
     }
 }

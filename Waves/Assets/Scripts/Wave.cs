@@ -24,7 +24,7 @@ public class Wave : MonoBehaviour
     public void Tick()
     {
         var moveAmountThisFrame = moveAmountPerSecond * Time.deltaTime;
-        moveAmountThisFrame *= Globals.isPlayerOneTurn ? 1 : -1;
+        moveAmountThisFrame *= Globals.isPlayerOneTurn ? -1 : 1;
         transform.position += moveAmountThisFrame * Vector3.right;
     }
 
@@ -92,8 +92,9 @@ public class Wave : MonoBehaviour
     public void ResetAfterFailedKey()
     {
         currentIndex = 0;
-        foreach (Letter l in letters)
+        for (int i = 0; i < letters.Count - 1; i++)
         {
+            Letter l = letters[i];
             l.SetStatus(LetterStatus.TBD);
         }
     }
