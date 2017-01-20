@@ -26,22 +26,37 @@ public class GameManager : MonoBehaviour
             Ui.GameOver(isPlayerOneWinner);
         }
 
-        var result = inputManager.GetInputResult(wave.GetNextKey());
-        wave.HandleInputResult(result);
+        var result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker);
+        wave.HandleInputResult(result.inputResultState);
 
         if(wave.CheckKeysSuccess())
         {
-            if(Globals.isPlayerOneTurn)
-            {
-                wave.Reverse(KeyCode.W);
-            }
-            else
-            {
-                wave.Reverse(KeyCode.UpArrow);
-            }
+            wave.Reverse(result.pressedKey);
             Globals.isPlayerOneTurn = !Globals.isPlayerOneTurn;
         }
 
 
 	}
+    
+    void HandleInputResult(InputResult result)
+    {
+        if(result.inputResultState == InputResultState.Correct)
+        {
+            wave.HandleSuccessInput();
+        }
+        else if(result.inputResultState == InputResultState.Wrong)
+        {
+            wave.HandleFailedInput();
+            StartCoroutine(OnFailedInput());
+        }
+    }
+
+    public IEnumerator OnFailedInput()
+    {
+        inputManager.isResponsive = false;
+        yield return new WaitForSeconds(1.0f);
+        wave.ResetAfterFailedKey();
+        inputManager.isResponsive = true;
+    }
+
 }
