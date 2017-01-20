@@ -3,14 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum InputResult
-{
-    Correct,
-    Wrong,
-    Blank,
-
-}
-
 public class InputManager
 {
     public Dictionary<bool, List<KeyCode>> validKeyCodes = new Dictionary<bool, List<KeyCode>>();
@@ -38,22 +30,29 @@ public class InputManager
 
     }
 
-    public InputResult GetInputResult(KeyCode expectedKey)
+    public InputResult GetInputResult(KeyCode expectedKey, bool isJoker)
     {
         if(Input.GetKeyDown(expectedKey))
         {
-            return InputResult.Correct;
+            return new InputResult(InputResultState.Correct, expectedKey);
         }
         else
         {
             foreach(KeyCode keyCode in validKeyCodes[Globals.isPlayerOneTurn])
             {
-                if(Input.GetKeyDown(expectedKey))
+                if(Input.GetKeyDown(keyCode))
                 {
-                    return InputResult.Wrong;
+                    if(isJoker)
+                    {
+                        return new InputResult(InputResultState.Correct, keyCode);
+                    }
+                    else
+                    {
+                        return new InputResult(InputResultState.Wrong, keyCode);
+                    }
                 }
             }
         }
-        return InputResult.Blank;
+        return new InputResult(InputResultState.Blank, KeyCode.Space);
     }
 }

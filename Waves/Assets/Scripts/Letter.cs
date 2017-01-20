@@ -18,6 +18,7 @@ public class Letter : MonoBehaviour
 
     public void SetKey(KeyCode key)
     {
+        this.isJoker = false;
         this.key = key;
         UpdateImage();
     }
@@ -25,6 +26,7 @@ public class Letter : MonoBehaviour
 	void Start ()
     {
         status = LetterStatus.TBD;
+        key = KeyCode.Alpha2;
 	}
 	
 	void Update ()

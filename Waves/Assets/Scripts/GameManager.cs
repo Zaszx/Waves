@@ -23,19 +23,12 @@ public class GameManager : MonoBehaviour
 
         }
 
-        var result = inputManager.GetInputResult(wave.GetNextKey());
-        wave.HandleInputResult(result);
+        var result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker);
+        wave.HandleInputResult(result.inputResultState);
 
         if(wave.CheckKeysSuccess())
         {
-            if(Globals.isPlayerOneTurn)
-            {
-                wave.Reverse(KeyCode.W);
-            }
-            else
-            {
-                wave.Reverse(KeyCode.UpArrow);
-            }
+            wave.Reverse(result.pressedKey);
             Globals.isPlayerOneTurn = !Globals.isPlayerOneTurn;
         }
 

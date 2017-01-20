@@ -46,19 +46,20 @@ public class Wave : MonoBehaviour
         currentIndex = 0;
 
         var newLetter = Instantiate(Prefabs.letter).GetComponent<Letter>();
-        newLetter.isJoker = false;
+        newLetter.isJoker = true;
         newLetter.transform.SetParent(LettersParent);
-        newLetter.key = KeyCode.W;
         letters.Add(newLetter);
     }
 
     public void Reverse(KeyCode newKeyCode)
     {
+        Letter currentLetter = letters[currentIndex - 1];
+        currentLetter.SetKey(newKeyCode);
+
         currentIndex = 0;
         var newLetter = Instantiate(Prefabs.letter).GetComponent<Letter>();
-        newLetter.isJoker = false;
+        newLetter.isJoker = true;
         newLetter.transform.SetParent(LettersParent);
-        newLetter.key = newKeyCode;
         letters.Add(newLetter);
 
         foreach(var letter in letters)
@@ -72,22 +73,27 @@ public class Wave : MonoBehaviour
 
     }
 
+    public Letter GetNextLetter()
+    {
+        return letters[currentIndex];
+    }
+
     public KeyCode GetNextKey()
     {
         return letters[currentIndex].key;
     }
 
-    public void HandleInputResult(InputResult inputResult)
+    public void HandleInputResult(InputResultState inputResult)
     {
         var currentLetter = letters[currentIndex];
 
-        if (inputResult == InputResult.Correct)
+        if (inputResult == InputResultState.Correct)
         {
             currentLetter.SetStatus(LetterStatus.Success);
 
             currentIndex++;
         }
-        else if (inputResult == InputResult.Wrong)
+        else if (inputResult == InputResultState.Wrong)
         {
             currentLetter.SetStatus(LetterStatus.Fail);
 
