@@ -53,14 +53,17 @@ public class Wave : MonoBehaviour
         letters.Clear();
         currentIndex = 0;
 
-        CreateLetterWith(KeyCode.W);
+        CreateLetterWith(KeyCode.Alpha3, true);
     }
 
     public void Reverse(KeyCode newKeyCode)
     {
+        Letter currentLetter = letters[currentIndex - 1];
+        currentLetter.SetKey(newKeyCode);
+
         currentIndex = 0;
 
-        CreateLetterWith(newKeyCode);
+        CreateLetterWith(KeyCode.Alpha5, true);
 
         foreach (var letter in letters)
         {
@@ -72,10 +75,10 @@ public class Wave : MonoBehaviour
         }
     }
 
-    private void CreateLetterWith(KeyCode keyCode)
+    private void CreateLetterWith(KeyCode keyCode, bool isJoker)
     {
         var newLetter = Instantiate(Prefabs.letter).GetComponent<Letter>();
-        newLetter.isJoker = false;
+        newLetter.isJoker = isJoker;
         newLetter.transform.SetParent(LettersParent);
         newLetter.key = keyCode;
         letters.Add(newLetter);
