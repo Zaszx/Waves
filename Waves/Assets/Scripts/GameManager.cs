@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         }
 
         var result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker);
-        wave.HandleInputResult(result.inputResultState);
+        HandleInputResult(result);
 
         if(wave.CheckKeysSuccess())
         {

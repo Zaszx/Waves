@@ -86,20 +86,34 @@ public class Wave : MonoBehaviour
         return letters[currentIndex].key;
     }
 
-    public void HandleInputResult(InputResult inputResult)
+    public void ResetAfterFailedKey()
     {
-        var currentLetter = letters[currentIndex];
-
-        if (inputResult == InputResult.Correct)
+        currentIndex = 0;
+        foreach (Letter l in letters)
         {
-            currentLetter.SetStatus(LetterStatus.Success);
-            currentIndex++;
-        }
-        else if (inputResult == InputResult.Wrong)
-        {
-            currentLetter.SetStatus(LetterStatus.Fail);
+            l.SetStatus(LetterStatus.TBD);
         }
     }
+
+    public void HandleSuccessInput()
+    {
+        var currentLetter = letters[currentIndex];
+        currentLetter.SetStatus(LetterStatus.Success);
+
+        currentIndex++;
+    }
+
+    public Letter GetNextLetter()
+    {
+        return letters[currentIndex];
+    }
+
+    public void HandleFailedInput()
+    {
+        var currentLetter = letters[currentIndex];
+        currentLetter.SetStatus(LetterStatus.Fail);
+    }
+
 
     public bool CheckKeysSuccess()
     {
