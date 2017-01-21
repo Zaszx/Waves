@@ -16,6 +16,7 @@ public enum ItemType
 public class Items
 {
     public Dictionary<ItemType, Sprite> itemTypeToSpriteMap = new Dictionary<ItemType, Sprite>();
+
     public void Init()
     {
         itemTypeToSpriteMap[ItemType.Kazik] = Resources.Load<Sprite>("Textures/kazik");

@@ -15,7 +15,7 @@ public class Wheel
         // Populate wheel
         for (int i = 0; i < 100; i++)
         {
-            var itemPrefab = Prefabs.kazik; // This is gonna change
+            var itemPrefab = Prefabs.items.Random();
             var item = GameObject.Instantiate(itemPrefab);
             item.transform.SetParent(ui.WheelParent.transform, true);
             images.Add(item.GetComponent<Image>());
