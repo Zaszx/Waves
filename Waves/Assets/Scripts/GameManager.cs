@@ -2,37 +2,103 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    Wheel,
+    Countdown,
+    Game,
+    GameOver,
+}
+
 public class GameManager : MonoBehaviour
 {
     public Wave wave;
     public Ui Ui;
     private readonly InputManager inputManager = new InputManager();
-
+    public GameState gameState;
+    public Items items = new Items();
+    public Wheel wheel = new Wheel();
 
 	void Start ()
     {
         Globals.Init();
         inputManager.Init();
         wave.Init();
+        items.Init();
+
+        SwitchState(GameState.Wheel);
     }
 	
-	void Update ()
+    public void SwitchState(GameState newState)
     {
-        wave.Tick();
+        gameState = newState;
+        wave.gameObject.SetActive(false);
 
-	    bool isPlayerOneWinner;
-        if(wave.CheckLose(out isPlayerOneWinner))
+        if (gameState == GameState.Countdown)
         {
-            Ui.GameOver(isPlayerOneWinner);
+            wave.gameObject.SetActive(true);
+            StartCoroutine(CountdownCoroutine());
+        }
+        else if(gameState == GameState.Wheel)
+        {
+            StartCoroutine(SpinWheel());
+        }
+        else if(gameState == GameState.Game)
+        {
+            wave.gameObject.SetActive(true);
+        }
+    }
+
+    public IEnumerator SpinWheel()
+    {
+        yield return StartCoroutine(wheel.Spin(items, Ui));
+        SwitchState(GameState.Countdown);
+    }
+
+    public IEnumerator CountdownCoroutine()
+    {
+        float accumulatedTime = 0;
+        float totalTime = 1.0f;
+
+        for(int i = 3; i > 0; i--)
+        {
+            accumulatedTime = 0;
+            while(accumulatedTime < totalTime)
+            {
+                Ui.CountdownText.text = "" + i;
+                Ui.CountdownText.fontSize = (int)(40 + (1 - (accumulatedTime / totalTime)) * 30);
+                yield return new WaitForEndOfFrame();
+                accumulatedTime = accumulatedTime + Time.deltaTime;
+            }
         }
 
-        var result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker);
-        HandleInputResult(result);
+        SwitchState(GameState.Game);
 
-        if(wave.CheckKeysSuccess())
+        Ui.CountdownText.text = "GO!";
+        yield return new WaitForSeconds(1.0f);
+        Ui.CountdownText.text = "";
+    }
+
+	void Update ()
+    {
+        if(gameState == GameState.Game)
         {
-            wave.Reverse(result.pressedKey);
-            Globals.isPlayerOneTurn = !Globals.isPlayerOneTurn;
+            wave.Tick();
+            bool isPlayerOneWinner;
+            if (wave.CheckLose(out isPlayerOneWinner))
+            {
+                SwitchState(GameState.GameOver);
+                Ui.GameOver(isPlayerOneWinner);
+            }
+
+            var result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker);
+            HandleInputResult(result);
+
+            if (wave.CheckKeysSuccess())
+            {
+                wave.Reverse(result.pressedKey);
+                Globals.isPlayerOneTurn = !Globals.isPlayerOneTurn;
+            }
         }
 
 

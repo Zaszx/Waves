@@ -12,6 +12,10 @@ public class Ui : MonoBehaviour
     public GameObject GameOverPanel;
     public Text WinnerText;
     public GameObject PressSpaceText;
+    public Text CountdownText;
+    public GameObject WheelParent;
+    public Text BuKimeGirsinText;
+    public GameObject WaveObject;
 
     private bool _isWaitingForResetKey;
 
