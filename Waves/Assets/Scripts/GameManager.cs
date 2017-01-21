@@ -107,7 +107,8 @@ public class GameManager : MonoBehaviour
             InputResult result = new InputResult(InputResultState.Blank, KeyCode.Space);
             if(takeInputForWave)
             {
-                result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker, Globals.isPlayerOneTurn);
+                result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker,
+                    Globals.isPlayerOneTurn);
             }
             HandleInputResult(result);
 

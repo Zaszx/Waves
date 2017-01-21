@@ -25,11 +25,6 @@ public class Letter : MonoBehaviour
     public Sprite RightImage;
     public Sprite JokerImage;
 
-    void Awake()
-    {
-
-    }
-
     void Start()
     {
         Status = LetterStatus.TBD;
