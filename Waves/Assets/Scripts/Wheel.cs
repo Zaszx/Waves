@@ -9,10 +9,9 @@ public class Wheel
     public IEnumerator Spin(Items items, Ui ui)
     {
         var images = new List<Image>();
-        var spriteSize = Screen.width / 5.0f;
 
         // Populate wheel
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 100; i++)
         {
             var itemPrefab = Prefabs.kazik; // This is gonna change
             var item = GameObject.Instantiate(itemPrefab);
@@ -27,7 +26,7 @@ public class Wheel
         while (accumulatedTime < spinTime)
         {
             ui.WheelParent.transform.position -=
-                ui.WheelSpeedCurve.Evaluate(accumulatedTime / spinTime) * Vector3.right * 5;
+                ui.WheelSpeedCurve.Evaluate(accumulatedTime / spinTime) * Vector3.right * 50;
 
             accumulatedTime += Time.deltaTime;
 
