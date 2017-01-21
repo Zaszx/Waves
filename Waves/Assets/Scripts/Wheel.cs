@@ -8,6 +8,8 @@ public class Wheel
 {
     public IEnumerator Spin(Items items, Ui ui)
     {
+        Sfx.PlayWheelSpin();
+
         var images = new List<Image>();
 
         // Populate wheel
@@ -45,6 +47,8 @@ public class Wheel
                 (curImage, next) => Mathf.Abs(curImage.transform.position.x - mid) < Mathf.Abs(next.transform.position.x - mid)
                     ? curImage
                     : next);
+
+        Sfx.PlayWheelSelect();
 
         // Destroy others
         foreach (var image in images)

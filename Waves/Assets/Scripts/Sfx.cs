@@ -21,45 +21,55 @@ public static class Sfx
     public static AudioClip[] BonusCompleteds;
     public static AudioClip[] Girdis;
 
-    private static readonly AudioSource AudioSource;
+    private static AudioSource AudioSource;
 
-    static Sfx()
+    public static void Init()
     {
         AudioSource = Camera.main.GetComponent<AudioSource>();
 
         WheelSpins = new[]
         {
-            Resources.Load<AudioClip>("Sfx/WheelSpins/WheelSpin1"),
-            Resources.Load<AudioClip>("Sfx/WheelSpins/WheelSpin2"),
-            Resources.Load<AudioClip>("Sfx/WheelSpins/WheelSpin3"),
+            Resources.Load<AudioClip>("Sfx/wheelspin_loop_01"),
         };
 
         WheelSelects = new[]
         {
-            Resources.Load<AudioClip>("Sfx/WheelSpins/WheelSelects1"),
-            Resources.Load<AudioClip>("Sfx/WheelSpins/WheelSelects2"),
-            Resources.Load<AudioClip>("Sfx/WheelSpins/WheelSelects3"),
+            Resources.Load<AudioClip>("Sfx/wheelselect_01"),
+            Resources.Load<AudioClip>("Sfx/wheelselect_02"),
+            Resources.Load<AudioClip>("Sfx/wheelselect_03"),
+            Resources.Load<AudioClip>("Sfx/wheelselect_04"),
+            Resources.Load<AudioClip>("Sfx/wheelselect_05"),
+            Resources.Load<AudioClip>("Sfx/wheelselect_06"),
         };
 
         Countdowns = new[]
         {
-            Resources.Load<AudioClip>("Sfx/Countdowns/Countdown1"),
-            Resources.Load<AudioClip>("Sfx/Countdowns/Countdown2"),
-            Resources.Load<AudioClip>("Sfx/Countdowns/Countdown3"),
+            Resources.Load<AudioClip>("Sfx/countdown_01"),
+            Resources.Load<AudioClip>("Sfx/countdown_02"),
+            Resources.Load<AudioClip>("Sfx/countdown_03"),
+            Resources.Load<AudioClip>("Sfx/countdown_04"),
+            Resources.Load<AudioClip>("Sfx/countdown_05"),
+            Resources.Load<AudioClip>("Sfx/countdown_06"),
+            Resources.Load<AudioClip>("Sfx/countdown_07"),
         };
 
         SequenceCompletedLights = new[]
         {
-            Resources.Load<AudioClip>("Sfx/SequenceCompletedLights/SequenceCompletedLight1"),
-            Resources.Load<AudioClip>("Sfx/SequenceCompletedLights/SequenceCompletedLight2"),
-            Resources.Load<AudioClip>("Sfx/SequenceCompletedLights/SequenceCompletedLight3"),
+            Resources.Load<AudioClip>("Sfx/success_low_01"),
+            Resources.Load<AudioClip>("Sfx/success_low_02"),
+            Resources.Load<AudioClip>("Sfx/success_low_03"),
+            Resources.Load<AudioClip>("Sfx/success_low_04"),
+            Resources.Load<AudioClip>("Sfx/success_low_05"),
         };
 
         SequenceCompletedMediums = new[]
         {
-            Resources.Load<AudioClip>("Sfx/SequenceCompletedMediums/SequenceCompletedMedium1"),
-            Resources.Load<AudioClip>("Sfx/SequenceCompletedMediums/SequenceCompletedMedium2"),
-            Resources.Load<AudioClip>("Sfx/SequenceCompletedMediums/SequenceCompletedMedium3"),
+            Resources.Load<AudioClip>("Sfx/success_mid_01"),
+            Resources.Load<AudioClip>("Sfx/success_mid_02"),
+            Resources.Load<AudioClip>("Sfx/success_mid_03"),
+            Resources.Load<AudioClip>("Sfx/success_mid_04"),
+            Resources.Load<AudioClip>("Sfx/success_mid_05"),
+            Resources.Load<AudioClip>("Sfx/success_mid_06"),
         };
 
         SequenceCompletedHeavys = new[]
@@ -71,23 +81,28 @@ public static class Sfx
 
         GirmeyeYaklastis = new[]
         {
-            Resources.Load<AudioClip>("Sfx/GirmeyeYaklastis/GirmeyeYaklasti1"),
-            Resources.Load<AudioClip>("Sfx/GirmeyeYaklastis/GirmeyeYaklasti2"),
-            Resources.Load<AudioClip>("Sfx/GirmeyeYaklastis/GirmeyeYaklasti3"),
+            Resources.Load<AudioClip>("Sfx/closer_01"),
+            Resources.Load<AudioClip>("Sfx/closer_02"),
+            Resources.Load<AudioClip>("Sfx/closer_03"),
+            Resources.Load<AudioClip>("Sfx/closer_04"),
+            Resources.Load<AudioClip>("Sfx/closer_05"),
         };
 
         BonusCompleteds = new[]
         {
-            Resources.Load<AudioClip>("Sfx/BonusCompleteds/BonusCompleted1"),
-            Resources.Load<AudioClip>("Sfx/BonusCompleteds/BonusCompleted2"),
-            Resources.Load<AudioClip>("Sfx/BonusCompleteds/BonusCompleted3"),
+            Resources.Load<AudioClip>("Sfx/bonus_complete_01"),
+            Resources.Load<AudioClip>("Sfx/bonus_complete_02"),
+            Resources.Load<AudioClip>("Sfx/bonus_complete_03"),
+            Resources.Load<AudioClip>("Sfx/bonus_complete_04"),
+            Resources.Load<AudioClip>("Sfx/bonus_complete_05"),
         };
 
         Girdis = new[]
         {
-            Resources.Load<AudioClip>("Sfx/Girdis/Girdi1"),
-            Resources.Load<AudioClip>("Sfx/Girdis/Girdi2"),
-            Resources.Load<AudioClip>("Sfx/Girdis/Girdi3"),
+            Resources.Load<AudioClip>("Sfx/hasirt_01"),
+            Resources.Load<AudioClip>("Sfx/hasirt_02"),
+            Resources.Load<AudioClip>("Sfx/hasirt_03"),
+            Resources.Load<AudioClip>("Sfx/hasirt_04"),
         };
     }
 
@@ -125,6 +140,7 @@ public static class Sfx
     {
         AudioSource.PlayOneShot(GirmeyeYaklastis.Random());
     }
+
     public static void PlayBonusCompleted()
     {
         AudioSource.PlayOneShot(BonusCompleteds.Random());

@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 	void Start ()
     {
         Globals.Init();
+	    Sfx.Init();
         inputManager.Init();
         wave.Init();
         items.Init();
@@ -65,7 +66,9 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator CountdownCoroutine()
     {
-        float totalTime = 1.0f;
+        Sfx.PlayCountdown();
+
+        float totalTime = 0.5f;
         Ui.CountdownText.gameObject.SetActive(true);
         for (int i = 3; i > 0; i--)
         {
@@ -100,6 +103,7 @@ public class GameManager : MonoBehaviour
             bool isPlayerOneWinner;
             if (wave.CheckLose(out isPlayerOneWinner))
             {
+                Sfx.PlayGirdi();
                 StartCoroutine(ScreenShake(isPlayerOneWinner));
                 //bonusSequence.Clear();
                 //SwitchState(GameState.GameOver);
@@ -131,6 +135,16 @@ public class GameManager : MonoBehaviour
 
             if (wave.CheckKeysSuccess())
             {
+
+                if (Mathf.Abs(wave.transform.position.x - Screen.width) < 300)
+                {
+                    Sfx.PlaySequenceCompletedMedium();
+                }
+                else //if (Mathf.Abs(wave.transform.position.x - Screen.width) < 200)
+                {
+                    Sfx.PlaySequenceCompletedLight();
+                }
+
                 wave.Reverse(result.pressedKey);
                 bonusSequence.Clear();
                 bonusSequence.InitBonusSequence(
@@ -144,11 +158,12 @@ public class GameManager : MonoBehaviour
 
             if(bonusSequence.CheckFinished() && bonusSequence.letters.Count > 0)
             {
+                Sfx.PlayBonusCompleted();
+
                 wave.moveAmountAdjustment = 7.0f;
                 takeInputForBonus = false;
             }
         }
-
 
 	}
     
@@ -172,7 +187,6 @@ public class GameManager : MonoBehaviour
         wave.ResetAfterFailedKey();
         takeInputForWave = true;
     }
-
 
     IEnumerator ScreenShake(bool isPlayerOneWinner)
     {
