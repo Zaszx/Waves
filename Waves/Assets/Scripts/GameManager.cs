@@ -115,7 +115,8 @@ public class GameManager : MonoBehaviour
             InputResult bonusSequenceResult = new InputResult(InputResultState.Blank, KeyCode.Space);
             if(takeInputForBonus && bonusSequence.letters.Count > 0)
             {
-                bonusSequenceResult = inputManager.GetInputResult(bonusSequence.GetNextLetter().key, false, !Globals.isPlayerOneTurn);
+                bonusSequenceResult = inputManager.GetInputResult(bonusSequence.GetNextLetter().key, false,
+                    !Globals.isPlayerOneTurn);
             }
             if(bonusSequenceResult.inputResultState == InputResultState.Correct)
             {

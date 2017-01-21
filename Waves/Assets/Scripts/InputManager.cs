@@ -15,7 +15,7 @@ public class InputManager
         validKeysForPlayerOne.Add(KeyCode.A);
         validKeysForPlayerOne.Add(KeyCode.S);
         validKeysForPlayerOne.Add(KeyCode.D);
-
+       
         validKeyCodes[true] = validKeysForPlayerOne;
 
         List<KeyCode> validKeysForPlayerTwo = new List<KeyCode>();
@@ -24,10 +24,10 @@ public class InputManager
         validKeysForPlayerTwo.Add(KeyCode.LeftArrow);
         validKeysForPlayerTwo.Add(KeyCode.RightArrow);
 
-        validKeysForPlayerTwo.Add(KeyCode.Joystick1Button0);
-        validKeysForPlayerTwo.Add(KeyCode.Joystick1Button1);
-        validKeysForPlayerTwo.Add(KeyCode.Joystick1Button2);
-        validKeysForPlayerTwo.Add(KeyCode.Joystick1Button3);
+        //validKeysForPlayerTwo.Add(KeyCode.Joystick1Button0);
+        //validKeysForPlayerTwo.Add(KeyCode.Joystick1Button1);
+        //validKeysForPlayerTwo.Add(KeyCode.Joystick1Button2);
+        //validKeysForPlayerTwo.Add(KeyCode.Joystick1Button3);
 
 
         validKeyCodes[false] = validKeysForPlayerTwo;
