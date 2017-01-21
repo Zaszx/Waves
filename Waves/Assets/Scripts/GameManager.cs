@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         takeInputForWave = true;
         takeInputForBonus = true;
 
-        SwitchState(GameState.Countdown);
+        SwitchState(GameState.Wheel);
 
     }
 	
