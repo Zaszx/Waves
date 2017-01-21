@@ -16,6 +16,7 @@ public class Ui : MonoBehaviour
     public GameObject WheelParent;
     public Text BuKimeGirsinText;
     public GameObject WaveObject;
+    public GameObject WheelArrow;
 
     private bool _isWaitingForResetKey;
 

@@ -25,12 +25,14 @@ public class Wheel
                 newImage.sprite = items.itemTypeToSpriteMap[(ItemType)i];
                 newImage.rectTransform.sizeDelta = new Vector2(spriteSize, spriteSize);
                 newImage.transform.position = new Vector3(currentPosition, Screen.height - spriteSize * 0.5f, 0);
-                newImage.transform.parent = ui.WheelParent.transform;
+                newImage.transform.SetParent(ui.WheelParent.transform);
                 images.Add(newImage);
 
                 currentPosition = currentPosition + spriteSize;
             }
         }
+
+        ui.WheelArrow.gameObject.SetActive(true);
 
         float fastTime = 2.0f + Random.Range(0.0f, 1.0f);
         float fastSpeed = 2.5f;
@@ -54,8 +56,8 @@ public class Wheel
         Image selectedImage = null;
         foreach(Image image in images)
         {
-            float start = image.rectTransform.position.x - image.rectTransform.sizeDelta.x;
-            float end = image.rectTransform.position.x + image.rectTransform.sizeDelta.x;
+            float start = image.rectTransform.position.x - image.rectTransform.sizeDelta.x * 0.5f;
+            float end = image.rectTransform.position.x + image.rectTransform.sizeDelta.x  * 0.5f;
 
             if(start < xPosition && end > xPosition)
             {
@@ -71,6 +73,8 @@ public class Wheel
                 GameObject.Destroy(image.gameObject);
             }
         }
+
+        ui.WheelArrow.gameObject.SetActive(false);
 
         accumulatedTime = 0.0f;
         float totalTime = 3.0f;
