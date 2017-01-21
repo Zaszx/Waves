@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     public Items items = new Items();
     public Wheel wheel = new Wheel();
+    public BonusSequence bonusSequence = new BonusSequence();
+
+    public bool takeInputForWave = true;
+    public bool takeInputForBonus = true;
 
 	void Start ()
     {
@@ -26,7 +30,11 @@ public class GameManager : MonoBehaviour
         wave.Init();
         items.Init();
 
+        takeInputForWave = true;
+        takeInputForBonus = true;
+
         SwitchState(GameState.Wheel);
+
     }
 	
     public void SwitchState(GameState newState)
@@ -87,17 +95,48 @@ public class GameManager : MonoBehaviour
             bool isPlayerOneWinner;
             if (wave.CheckLose(out isPlayerOneWinner))
             {
+                bonusSequence.Clear();
                 SwitchState(GameState.GameOver);
                 Ui.GameOver(isPlayerOneWinner);
             }
-
-            var result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker);
+            InputResult result = new InputResult(InputResultState.Blank, KeyCode.Space);
+            if(takeInputForWave)
+            {
+                result = inputManager.GetInputResult(wave.GetNextLetter().key, wave.GetNextLetter().isJoker, Globals.isPlayerOneTurn);
+            }
             HandleInputResult(result);
+
+            InputResult bonusSequenceResult = new InputResult(InputResultState.Blank, KeyCode.Space);
+            if(takeInputForBonus && bonusSequence.letters.Count > 0)
+            {
+                bonusSequenceResult = inputManager.GetInputResult(bonusSequence.GetNextLetter().key, false, !Globals.isPlayerOneTurn);
+            }
+            if(bonusSequenceResult.inputResultState == InputResultState.Correct)
+            {
+                bonusSequence.HandleSuccess();
+            }
+            else if(bonusSequenceResult.inputResultState == InputResultState.Wrong)
+            {
+                bonusSequence.HandleFail();
+                takeInputForBonus = false;
+            }
 
             if (wave.CheckKeysSuccess())
             {
                 wave.Reverse(result.pressedKey);
+                bonusSequence.Clear();
+                bonusSequence.InitBonusSequence(Globals.isPlayerOneTurn ? Ui.PlayerOneBonusSequence : Ui.PlayerTwoBonusSequence,
+                    Globals.isPlayerOneTurn ? Ui.PlayerOneBonusSequenceText : Ui.PlayerTwoBonusSequenceText,
+                    wave.letters.Count + 5, 
+                    Globals.isPlayerOneTurn);
+                takeInputForBonus = true;
                 Globals.isPlayerOneTurn = !Globals.isPlayerOneTurn;
+            }
+
+            if(bonusSequence.CheckFinished() && bonusSequence.letters.Count > 0)
+            {
+                wave.moveAmountAdjustment = 5.0f;
+                takeInputForBonus = false;
             }
         }
 
@@ -119,10 +158,10 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator OnFailedInput()
     {
-        inputManager.isResponsive = false;
+        takeInputForWave = false;
         yield return new WaitForSeconds(1.0f);
         wave.ResetAfterFailedKey();
-        inputManager.isResponsive = true;
+        takeInputForWave = true;
     }
 
 }

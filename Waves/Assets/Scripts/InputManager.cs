@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class InputManager
 {
-    public Dictionary<bool, List<KeyCode>> validKeyCodes = new Dictionary<bool, List<KeyCode>>();
-
-    public bool isResponsive;
-
+    public static Dictionary<bool, List<KeyCode>> validKeyCodes = new Dictionary<bool, List<KeyCode>>();
+    
     public void Init()
     {
+        validKeyCodes.Clear();
         List<KeyCode> validKeysForPlayerOne = new List<KeyCode>();
         validKeysForPlayerOne.Add(KeyCode.W);
         validKeysForPlayerOne.Add(KeyCode.A);
@@ -26,8 +25,6 @@ public class InputManager
         validKeysForPlayerTwo.Add(KeyCode.RightArrow);
 
         validKeyCodes[false] = validKeysForPlayerTwo;
-
-        isResponsive = true;
     }
 
     public void Tick()
@@ -35,19 +32,15 @@ public class InputManager
 
     }
 
-    public InputResult GetInputResult(KeyCode expectedKey, bool isJoker)
+    public InputResult GetInputResult(KeyCode expectedKey, bool isJoker, bool forPlayerOne)
     {
-        if(isResponsive == false)
-        {
-            return new InputResult(InputResultState.Blank, KeyCode.Space);
-        }
         if(Input.GetKeyDown(expectedKey))
         {
             return new InputResult(InputResultState.Correct, expectedKey);
         }
         else
         {
-            foreach(KeyCode keyCode in validKeyCodes[Globals.isPlayerOneTurn])
+            foreach(KeyCode keyCode in validKeyCodes[forPlayerOne])
             {
                 if(Input.GetKeyDown(keyCode))
                 {

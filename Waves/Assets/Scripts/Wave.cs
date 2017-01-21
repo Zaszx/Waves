@@ -8,6 +8,7 @@ public class Wave : MonoBehaviour
     public List<Letter> letters = new List<Letter>();
     public int currentIndex;
     public float moveAmountPerSecond;
+    public float moveAmountAdjustment;
     
     // UI
     public Transform LettersParent;
@@ -16,7 +17,8 @@ public class Wave : MonoBehaviour
     public void Init()
     {
         currentIndex = 0;
-        moveAmountPerSecond = Screen.width * 0.5f * 0.1f;
+        moveAmountPerSecond = Screen.width * 0.5f * 0.06f;
+        moveAmountAdjustment = 1.0f;
 
         Reset();
     }
@@ -25,7 +27,7 @@ public class Wave : MonoBehaviour
     {
         var moveAmountThisFrame = moveAmountPerSecond * Time.deltaTime;
         moveAmountThisFrame *= Globals.isPlayerOneTurn ? -1 : 1;
-        transform.position += moveAmountThisFrame * Vector3.right;
+        transform.position += moveAmountThisFrame * Vector3.right * moveAmountAdjustment;
     }
 
     public bool CheckLose(out bool isPlayerOneWinner)
@@ -61,6 +63,7 @@ public class Wave : MonoBehaviour
         Letter currentLetter = letters[currentIndex - 1];
         currentLetter.SetKey(newKeyCode);
 
+        moveAmountAdjustment = 1.0f;
         currentIndex = 0;
 
         CreateLetterWith(KeyCode.Alpha5, true);

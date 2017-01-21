@@ -17,6 +17,10 @@ public class Ui : MonoBehaviour
     public Text BuKimeGirsinText;
     public GameObject WaveObject;
     public GameObject WheelArrow;
+    public GameObject PlayerOneBonusSequence;
+    public Text PlayerOneBonusSequenceText;
+    public GameObject PlayerTwoBonusSequence;
+    public Text PlayerTwoBonusSequenceText;
 
     private bool _isWaitingForResetKey;
 

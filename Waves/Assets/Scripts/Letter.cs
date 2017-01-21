@@ -27,7 +27,7 @@ public class Letter : MonoBehaviour
     void Start()
     {
         Status = LetterStatus.TBD;
-        BackgroundImage.color = Color.magenta;
+        BackgroundImage.color = Color.clear;
     }
 
     public void SetKey(KeyCode k)
@@ -39,15 +39,19 @@ public class Letter : MonoBehaviour
         switch (k)
         {
             case KeyCode.W:
+            case KeyCode.UpArrow:
                 ForegroundImage.sprite = UpImage;
                 break;
             case KeyCode.A:
+            case KeyCode.LeftArrow:
                 ForegroundImage.sprite = LeftImage;
                 break;
             case KeyCode.S:
+            case KeyCode.DownArrow:
                 ForegroundImage.sprite = DownImage;
                 break;
             case KeyCode.D:
+            case KeyCode.RightArrow:
                 ForegroundImage.sprite = RightImage;
                 break;
 
