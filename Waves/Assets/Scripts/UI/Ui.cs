@@ -55,6 +55,9 @@ public class Ui : MonoBehaviour
 
     IEnumerator MoveHasirt()
     {
+        //var initScale = Vector3.one;
+        //var targetScale = HasirtText.localScale;
+
         var initPos = HasirtText.position;
         var targetPos = new Vector2(Screen.width / 2f, initPos.y);
         for (var t = 0f; t < 1f; t += Time.deltaTime)

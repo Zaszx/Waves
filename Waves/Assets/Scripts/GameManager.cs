@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     public bool takeInputForWave = true;
     public bool takeInputForBonus = true;
+    private bool _enterBonusSuccOnce = true;
 
 	void Start ()
     {
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
         takeInputForWave = true;
         takeInputForBonus = true;
 
-        SwitchState(GameState.Wheel);
+        SwitchState(GameState.Countdown);
 
     }
 	
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour
 
             if (wave.CheckKeysSuccess())
             {
+                _enterBonusSuccOnce = true;
 
                 if (Mathf.Abs(wave.transform.position.x - Screen.width) < 300)
                 {
@@ -156,11 +158,14 @@ public class GameManager : MonoBehaviour
                 Globals.isPlayerOneTurn = !Globals.isPlayerOneTurn;
             }
 
-            if(bonusSequence.CheckFinished() && bonusSequence.letters.Count > 0)
+            if(bonusSequence.CheckFinished() 
+                && bonusSequence.letters.Count > 0
+                && _enterBonusSuccOnce)
             {
+                _enterBonusSuccOnce = false;
                 Sfx.PlayBonusCompleted();
 
-                wave.moveAmountAdjustment = 7.0f;
+                wave.moveAmountAdjustment = 4.0f;
                 takeInputForBonus = false;
             }
         }
