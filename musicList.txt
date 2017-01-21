@@ -1,0 +1,11 @@
+mainMusic
+wheelSpin
+wheelSelect
+countdown
+sequenceComplete x 3
+	ortalardan çevirdi
+	kenardan çevirdi
+	tam girmeden önce çevirdi
+girmeye yaklaþtý
+bonusComplete
+Girdi
