@@ -118,9 +118,9 @@ public class Wheel
         }
         ui.BuKimeGirsinText.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
-        
-        ui.WaveObject.GetComponent<Image>().sprite = items.itemTypeToSpriteMap[ItemType.Boru];
-        
+
+        ui.WaveObject.GetComponent<Image>().sprite = selectedImage.sprite;
+
         GameObject.Destroy(selectedImage.gameObject);
 
     }

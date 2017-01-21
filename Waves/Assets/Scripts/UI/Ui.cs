@@ -39,6 +39,13 @@ public class Ui : MonoBehaviour
     public Text WinnerText;
     public GameObject PressSpaceText;
 
+    [Header("Avatar Reactions")]
+    public Image Player1Avatar;
+    public Image Player2Avatar;
+
+    public Sprite[] Player1Reactions = new Sprite[3];
+    public Sprite[] Player2Reactions = new Sprite[3];
+
     private bool _isWaitingForResetKey;
 
     public void GameOver(bool isPlayerOneWinner)
@@ -51,6 +58,35 @@ public class Ui : MonoBehaviour
         }
         StartCoroutine(MoveHasirt());
         StartCoroutine(WaitAndEnableRestart());
+    }
+
+    public void UpdateAvatarReactions(float wavePercentage)
+    {
+        if(wavePercentage < 0.2f)
+        {
+            Player1Avatar.sprite = Player1Reactions[0];
+            Player2Avatar.sprite = Player2Reactions[2];
+        }
+        else if(wavePercentage < 0.4f)
+        {
+            Player1Avatar.sprite = Player1Reactions[1];
+            Player2Avatar.sprite = Player2Reactions[2];
+        }
+        else if(wavePercentage < 0.6f)
+        {
+            Player1Avatar.sprite = Player1Reactions[2];
+            Player2Avatar.sprite = Player2Reactions[2];
+        }
+        else if(wavePercentage < 0.8f)
+        {
+            Player1Avatar.sprite = Player1Reactions[2];
+            Player2Avatar.sprite = Player2Reactions[1];
+        }
+        else
+        {
+            Player1Avatar.sprite = Player1Reactions[2];
+            Player2Avatar.sprite = Player2Reactions[0];
+        }
     }
 
     IEnumerator MoveHasirt()

@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
         takeInputForWave = true;
         takeInputForBonus = true;
 
+        Ui.UpdateAvatarReactions(wave.transform.position.x / Screen.width);
+
         SwitchState(GameState.Wheel);
 
     }
@@ -43,10 +45,13 @@ public class GameManager : MonoBehaviour
     {
         gameState = newState;
         wave.gameObject.SetActive(false);
+        wave.LettersParent.gameObject.SetActive(false);
 
         if (gameState == GameState.Countdown)
         {
             wave.gameObject.SetActive(true);
+            wave.LettersParent.gameObject.SetActive(true);
+
             StartCoroutine(CountdownCoroutine());
         }
         else if(gameState == GameState.Wheel)
@@ -56,6 +61,8 @@ public class GameManager : MonoBehaviour
         else if(gameState == GameState.Game)
         {
             wave.gameObject.SetActive(true);
+            wave.LettersParent.gameObject.SetActive(true);
+
         }
     }
 
@@ -98,7 +105,15 @@ public class GameManager : MonoBehaviour
 
 	void Update ()
     {
-        if(gameState == GameState.Game)
+        float pressureAmount = Mathf.Abs(wave.transform.position.x / Screen.width - 0.5f) * 2.0f;
+        if(pressureAmount > 0.9f)
+        {
+            Sfx.PlayGirmeyeYaklasti();
+        }
+
+        Ui.UpdateAvatarReactions(wave.transform.position.x / Screen.width);
+
+        if (gameState == GameState.Game)
         {
             wave.Tick();
             bool isPlayerOneWinner;
@@ -137,14 +152,18 @@ public class GameManager : MonoBehaviour
             if (wave.CheckKeysSuccess())
             {
                 _enterBonusSuccOnce = true;
-
-                if (Mathf.Abs(wave.transform.position.x - Screen.width) < 300)
+                
+                if (pressureAmount < 0.3f)
+                {
+                    Sfx.PlaySequenceCompletedLight();
+                }
+                else if(pressureAmount < 0.8f)
                 {
                     Sfx.PlaySequenceCompletedMedium();
                 }
-                else //if (Mathf.Abs(wave.transform.position.x - Screen.width) < 200)
+                else
                 {
-                    Sfx.PlaySequenceCompletedLight();
+                    Sfx.PlaySequenceCompletedHeavy();
                 }
 
                 wave.Reverse(result.pressedKey);
