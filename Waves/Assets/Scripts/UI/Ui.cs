@@ -9,9 +9,8 @@ using UnityEngine.UI;
 
 public class Ui : MonoBehaviour
 {
-    public GameObject GameOverPanel;
-    public Text WinnerText;
-    public GameObject PressSpaceText;
+
+
     public Text CountdownText;
     public GameObject WheelParent;
     public Text BuKimeGirsinText;
@@ -29,7 +28,14 @@ public class Ui : MonoBehaviour
     public AnimationCurve BuKimeGirsinTextFocusCurve;
     public AnimationCurve BuKimeGirsinTextDefocusCurve;
     public AnimationCurve SelectedItemDefocusCurve;
-    
+    public AnimationCurve HasirtCurve;
+
+
+    [Header("Game over things")]
+    public Transform HasirtText;
+    public GameObject GameOverPanel;
+    public Text WinnerText;
+    public GameObject PressSpaceText;
 
     private bool _isWaitingForResetKey;
 
@@ -37,7 +43,20 @@ public class Ui : MonoBehaviour
     {
         GameOverPanel.SetActive(true);
         WinnerText.text = isPlayerOneWinner ? "SAĞDAKİNE GIRDI" : "SOLDAKİNE GIRDI";
+        StartCoroutine(MoveHasirt());
         StartCoroutine(WaitAndEnableRestart());
+    }
+
+    IEnumerator MoveHasirt()
+    {
+        var initPos = HasirtText.position;
+        var targetPos = new Vector2(Screen.width / 2f, initPos.y);
+        for (var t = 0f; t < 1f; t += Time.deltaTime)
+        {
+            HasirtText.position = Vector2.Lerp(initPos, targetPos, HasirtCurve.Evaluate(t));
+            yield return null;
+        }
+
     }
 
     IEnumerator WaitAndEnableRestart()

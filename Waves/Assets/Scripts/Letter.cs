@@ -75,15 +75,42 @@ public class Letter : MonoBehaviour
         if (s == LetterStatus.Success)
         {
             BackgroundImage.color = Color.green;
+            StartCoroutine(SuccessEffect());
         }
         else if (s == LetterStatus.Fail)
         {
             BackgroundImage.color = Color.red;
+            StartCoroutine(FailEffect());
         }
         else
         {
             BackgroundImage.color = Color.clear;
         }
+    }
 
+    IEnumerator SuccessEffect()
+    {
+        const float effectTime = 0.1f;
+
+        var initScale = transform.localScale * 1.4f;
+        var targetScale = transform.localScale;
+
+        var c = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+        for (var t = 0f; t < 1f; t += Time.deltaTime)
+        {
+            transform.localScale = Vector3.Lerp(initScale, targetScale, c.Evaluate(t / effectTime));
+            yield return null;
+        }
+    }
+
+    IEnumerator FailEffect()
+    {
+        var initScale = transform.localScale;
+        transform.localScale *= 1.6f;
+        transform.Rotate(Vector3.forward, -30);
+        yield return new WaitForSeconds(0.5f);
+        transform.rotation = Quaternion.identity;
+        transform.localScale = initScale;
     }
 }
