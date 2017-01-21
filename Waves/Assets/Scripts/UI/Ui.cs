@@ -9,8 +9,9 @@ using UnityEngine.UI;
 
 public class Ui : MonoBehaviour
 {
-
-
+    public GameObject GameOverPanel;
+    public Text WinnerText;
+    public GameObject PressSpaceText;
     public Text CountdownText;
     public GameObject WheelParent;
     public Text BuKimeGirsinText;
@@ -21,21 +22,7 @@ public class Ui : MonoBehaviour
     public GameObject PlayerTwoBonusSequence;
     public Text PlayerTwoBonusSequenceText;
 
-    [Header("Anim curves")]
-    public AnimationCurve CountdownTextSizeCurve;
-    public AnimationCurve WheelSpeedCurve;
-    public AnimationCurve SelectedItemFocusCurve;
-    public AnimationCurve BuKimeGirsinTextFocusCurve;
-    public AnimationCurve BuKimeGirsinTextDefocusCurve;
-    public AnimationCurve SelectedItemDefocusCurve;
-    public AnimationCurve HasirtCurve;
-
-
-    [Header("Game over things")]
-    public Transform HasirtText;
-    public GameObject GameOverPanel;
-    public Text WinnerText;
-    public GameObject PressSpaceText;
+    public bool isSafeMode = false;
 
     private bool _isWaitingForResetKey;
 
@@ -43,20 +30,11 @@ public class Ui : MonoBehaviour
     {
         GameOverPanel.SetActive(true);
         WinnerText.text = isPlayerOneWinner ? "SAĞDAKİNE GIRDI" : "SOLDAKİNE GIRDI";
-        StartCoroutine(MoveHasirt());
-        StartCoroutine(WaitAndEnableRestart());
-    }
-
-    IEnumerator MoveHasirt()
-    {
-        var initPos = HasirtText.position;
-        var targetPos = new Vector2(Screen.width / 2f, initPos.y);
-        for (var t = 0f; t < 1f; t += Time.deltaTime)
+        if(isSafeMode)
         {
-            HasirtText.position = Vector2.Lerp(initPos, targetPos, HasirtCurve.Evaluate(t));
-            yield return null;
+            WinnerText.text = isPlayerOneWinner ? "SOLDAKİ KAZANDI" : "SAĞDAKİ KAZANDI";
         }
-
+        StartCoroutine(WaitAndEnableRestart());
     }
 
     IEnumerator WaitAndEnableRestart()
