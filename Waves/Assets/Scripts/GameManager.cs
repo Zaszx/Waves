@@ -65,18 +65,23 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator CountdownCoroutine()
     {
-        float accumulatedTime = 0;
         float totalTime = 1.0f;
-
-        for(int i = 3; i > 0; i--)
+        Ui.CountdownText.gameObject.SetActive(true);
+        for (int i = 3; i > 0; i--)
         {
-            accumulatedTime = 0;
-            while(accumulatedTime < totalTime)
+            float accumulatedTime = 0;
+            var initSize = Ui.CountdownText.rectTransform.sizeDelta;
+            var targetSize = Ui.CountdownText.rectTransform.sizeDelta / 10f;
+            while (accumulatedTime < totalTime)
             {
                 Ui.CountdownText.text = "" + i;
-                Ui.CountdownText.fontSize = (int)(40 + (1 - (accumulatedTime / totalTime)) * 30);
+
+                var t = Ui.CountdownTextSizeCurve.Evaluate(accumulatedTime / totalTime);
+                Ui.CountdownText.rectTransform.sizeDelta = Vector2.Lerp(initSize, targetSize, t);
+
+                //Ui.CountdownText.fontSize = (int)(40 + (1 - (accumulatedTime / totalTime)) * 30);
                 yield return new WaitForEndOfFrame();
-                accumulatedTime = accumulatedTime + Time.deltaTime;
+                accumulatedTime += Time.deltaTime;
             }
         }
 
@@ -125,7 +130,8 @@ public class GameManager : MonoBehaviour
             {
                 wave.Reverse(result.pressedKey);
                 bonusSequence.Clear();
-                bonusSequence.InitBonusSequence(Globals.isPlayerOneTurn ? Ui.PlayerOneBonusSequence : Ui.PlayerTwoBonusSequence,
+                bonusSequence.InitBonusSequence(
+                    Globals.isPlayerOneTurn ? Ui.PlayerOneBonusSequence : Ui.PlayerTwoBonusSequence,
                     Globals.isPlayerOneTurn ? Ui.PlayerOneBonusSequenceText : Ui.PlayerTwoBonusSequenceText,
                     wave.letters.Count + 5, 
                     Globals.isPlayerOneTurn);

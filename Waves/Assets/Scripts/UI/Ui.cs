@@ -22,6 +22,15 @@ public class Ui : MonoBehaviour
     public GameObject PlayerTwoBonusSequence;
     public Text PlayerTwoBonusSequenceText;
 
+    [Header("Anim curves")]
+    public AnimationCurve CountdownTextSizeCurve;
+    public AnimationCurve WheelSpeedCurve;
+    public AnimationCurve SelectedItemFocusCurve;
+    public AnimationCurve BuKimeGirsinTextFocusCurve;
+    public AnimationCurve BuKimeGirsinTextDefocusCurve;
+    public AnimationCurve SelectedItemDefocusCurve;
+    
+
     private bool _isWaitingForResetKey;
 
     public void GameOver(bool isPlayerOneWinner)
