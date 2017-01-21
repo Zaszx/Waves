@@ -49,8 +49,8 @@ public class BonusSequence
         var newLetter = GameObject.Instantiate(Prefabs.letter).GetComponent<Letter>();
         newLetter.isJoker = isJoker;
         newLetter.transform.SetParent(rootObject.transform);
-        newLetter.SetKey(keyCode);
         newLetter.SetStatus(LetterStatus.TBD);
+        newLetter.SetKey(keyCode);
         letters.Add(newLetter);
     }
 

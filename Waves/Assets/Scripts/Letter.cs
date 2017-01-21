@@ -23,11 +23,22 @@ public class Letter : MonoBehaviour
     public Sprite DownImage;
     public Sprite LeftImage;
     public Sprite RightImage;
+    public Sprite JokerImage;
+
+    void Awake()
+    {
+
+    }
 
     void Start()
     {
         Status = LetterStatus.TBD;
         BackgroundImage.color = Color.clear;
+
+        if(isJoker)
+        {
+            ForegroundImage.sprite = JokerImage;
+        }
     }
 
     public void SetKey(KeyCode k)

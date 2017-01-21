@@ -1,10 +1,17 @@
 fileFormatVersion: 2
 guid: 5423afef17defa14595f3b161730f591
-timeCreated: 1484938602
+timeCreated: 1484972879
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ForegroundImage: {instanceID: 0}
+  - BackgroundImage: {instanceID: 0}
+  - UpImage: {instanceID: 0}
+  - DownImage: {instanceID: 0}
+  - LeftImage: {instanceID: 0}
+  - RightImage: {instanceID: 0}
+  - JokerImage: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
