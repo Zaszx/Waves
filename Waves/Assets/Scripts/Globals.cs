@@ -24,13 +24,13 @@ public static class Globals
         //keyCodePairs[KeyCode.RightArrow] = KeyCode.D;
 
         keyCodePairs[KeyCode.W] = KeyCode.Joystick1Button0;
-        keyCodePairs[KeyCode.A] = KeyCode.Joystick1Button1;
+        keyCodePairs[KeyCode.D] = KeyCode.Joystick1Button1;
         keyCodePairs[KeyCode.S] = KeyCode.Joystick1Button2;
-        keyCodePairs[KeyCode.D] = KeyCode.Joystick1Button3;
+        keyCodePairs[KeyCode.A] = KeyCode.Joystick1Button3;
 
         keyCodePairs[KeyCode.Joystick1Button0] = KeyCode.W;
-        keyCodePairs[KeyCode.Joystick1Button1] = KeyCode.A;
+        keyCodePairs[KeyCode.Joystick1Button1] = KeyCode.D;
         keyCodePairs[KeyCode.Joystick1Button2] = KeyCode.S;
-        keyCodePairs[KeyCode.Joystick1Button3] = KeyCode.D;
+        keyCodePairs[KeyCode.Joystick1Button3] = KeyCode.A;
     }
 }
