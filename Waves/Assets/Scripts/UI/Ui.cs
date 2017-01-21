@@ -24,6 +24,15 @@ public class Ui : MonoBehaviour
 
     public bool isSafeMode = false;
 
+    [Header("Anim curves")]
+    public AnimationCurve CountdownTextSizeCurve;
+    public AnimationCurve WheelSpeedCurve;
+    public AnimationCurve SelectedItemFocusCurve;
+    public AnimationCurve BuKimeGirsinTextFocusCurve;
+    public AnimationCurve BuKimeGirsinTextDefocusCurve;
+    public AnimationCurve SelectedItemDefocusCurve;
+    public AnimationCurve HasirtCurve;
+
     [Header("Game over things")]
     public Transform HasirtText;
     public GameObject GameOverPanel;
@@ -40,7 +49,20 @@ public class Ui : MonoBehaviour
         {
             WinnerText.text = isPlayerOneWinner ? "SOLDAKİ KAZANDI" : "SAĞDAKİ KAZANDI";
         }
+        StartCoroutine(MoveHasirt());
         StartCoroutine(WaitAndEnableRestart());
+    }
+
+    IEnumerator MoveHasirt()
+    {
+        var initPos = HasirtText.position;
+        var targetPos = new Vector2(Screen.width / 2f, initPos.y);
+        for (var t = 0f; t < 1f; t += Time.deltaTime)
+        {
+            HasirtText.position = Vector2.Lerp(initPos, targetPos, HasirtCurve.Evaluate(t));
+            yield return null;
+        }
+
     }
 
     IEnumerator WaitAndEnableRestart()

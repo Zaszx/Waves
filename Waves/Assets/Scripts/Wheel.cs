@@ -68,11 +68,11 @@ public class Wheel
 
         if(ui.isSafeMode)
         {
-            ui.BuKimeGirsinText = "HAZIR";
+            ui.BuKimeGirsinText.text = "HAZIR";
         }
         else
         {
-            ui.BuKimeGirsinText = "Bu Kime Girsin?";
+            ui.BuKimeGirsinText.text = "Bu Kime Girsin?";
         }
 
         while(accumulatedTime < selectedLerpTime)
