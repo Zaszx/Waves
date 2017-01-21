@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class Ui : MonoBehaviour
 {
-
+    public Transform Root;
 
     public Text CountdownText;
     public GameObject WheelParent;
@@ -29,7 +29,6 @@ public class Ui : MonoBehaviour
     public AnimationCurve BuKimeGirsinTextDefocusCurve;
     public AnimationCurve SelectedItemDefocusCurve;
     public AnimationCurve HasirtCurve;
-
 
     [Header("Game over things")]
     public Transform HasirtText;

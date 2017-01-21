@@ -100,9 +100,10 @@ public class GameManager : MonoBehaviour
             bool isPlayerOneWinner;
             if (wave.CheckLose(out isPlayerOneWinner))
             {
-                bonusSequence.Clear();
-                SwitchState(GameState.GameOver);
-                Ui.GameOver(isPlayerOneWinner);
+                StartCoroutine(ScreenShake(isPlayerOneWinner));
+                //bonusSequence.Clear();
+                //SwitchState(GameState.GameOver);
+                //Ui.GameOver(isPlayerOneWinner);
             }
             InputResult result = new InputResult(InputResultState.Blank, KeyCode.Space);
             if(takeInputForWave)
@@ -143,7 +144,7 @@ public class GameManager : MonoBehaviour
 
             if(bonusSequence.CheckFinished() && bonusSequence.letters.Count > 0)
             {
-                wave.moveAmountAdjustment = 5.0f;
+                wave.moveAmountAdjustment = 7.0f;
                 takeInputForBonus = false;
             }
         }
@@ -172,4 +173,25 @@ public class GameManager : MonoBehaviour
         takeInputForWave = true;
     }
 
+
+    IEnumerator ScreenShake(bool isPlayerOneWinner)
+    {
+        SwitchState(GameState.GameOver);
+
+        const float duration = 2f;
+        var magnitude = 10f;
+        var initPos = Ui.Root.position;
+        for (var f = 0f; f < duration; f += Time.deltaTime)
+        {
+            var r = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+            Ui.Root.position = initPos + (r * magnitude * Mathf.Sign(Random.Range(-1f, 1f)));
+            magnitude = Mathf.Lerp(10, 0, f / duration);
+            yield return null;
+        }
+
+        Ui.Root.position = initPos;
+
+        bonusSequence.Clear();
+        Ui.GameOver(isPlayerOneWinner);
+    }
 }
