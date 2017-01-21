@@ -9,9 +9,9 @@ using UnityEngine.UI;
 
 public class Ui : MonoBehaviour
 {
-    public GameObject GameOverPanel;
-    public Text WinnerText;
-    public GameObject PressSpaceText;
+
+    public Transform Root;
+
     public Text CountdownText;
     public GameObject WheelParent;
     public Text BuKimeGirsinText;
@@ -23,6 +23,12 @@ public class Ui : MonoBehaviour
     public Text PlayerTwoBonusSequenceText;
 
     public bool isSafeMode = false;
+
+    [Header("Game over things")]
+    public Transform HasirtText;
+    public GameObject GameOverPanel;
+    public Text WinnerText;
+    public GameObject PressSpaceText;
 
     private bool _isWaitingForResetKey;
 
