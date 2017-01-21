@@ -46,18 +46,22 @@ public class Letter : MonoBehaviour
         {
             case KeyCode.W:
             case KeyCode.UpArrow:
+            case KeyCode.Joystick1Button0:
                 ForegroundImage.sprite = UpImage;
                 break;
             case KeyCode.A:
             case KeyCode.LeftArrow:
+            case KeyCode.Joystick1Button3:
                 ForegroundImage.sprite = LeftImage;
                 break;
             case KeyCode.S:
             case KeyCode.DownArrow:
+            case KeyCode.Joystick1Button2:
                 ForegroundImage.sprite = DownImage;
                 break;
             case KeyCode.D:
             case KeyCode.RightArrow:
+            case KeyCode.Joystick1Button1:
                 ForegroundImage.sprite = RightImage;
                 break;
 
