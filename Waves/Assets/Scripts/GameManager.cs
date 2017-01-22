@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     public bool takeInputForBonus = true;
     private bool _enterBonusSuccOnce = true;
 
+    public bool dontPlayGirmeyeYaklasti = false;
+
 	void Start ()
     {
         Globals.Init();
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
 
         SwitchState(GameState.Wheel);
 
+        dontPlayGirmeyeYaklasti = false;
     }
 	
     public void SwitchState(GameState newState)
@@ -85,7 +88,7 @@ public class GameManager : MonoBehaviour
             var targetSize = Ui.CountdownText.rectTransform.sizeDelta / 10f;
             while (accumulatedTime < totalTime)
             {
-                Ui.CountdownText.text = "" + i;
+                Ui.CountdownText.sprite = Ui.countdownSprites[i];
 
                 var t = Ui.CountdownTextSizeCurve.Evaluate(accumulatedTime / totalTime);
                 Ui.CountdownText.rectTransform.sizeDelta = Vector2.Lerp(initSize, targetSize, t);
@@ -98,23 +101,32 @@ public class GameManager : MonoBehaviour
 
         SwitchState(GameState.Game);
 
-        Ui.CountdownText.text = "GO!";
+        Ui.CountdownText.sprite = Ui.countdownSprites[0];
         yield return new WaitForSeconds(1.0f);
-        Ui.CountdownText.text = "";
+        Ui.CountdownText.gameObject.SetActive(false);
+    }
+
+    public IEnumerator DontPlayGirmeyeYaklasti()
+    {
+        dontPlayGirmeyeYaklasti = true;
+        yield return new WaitForSeconds(1.0f);
+        dontPlayGirmeyeYaklasti = false;
     }
 
 	void Update ()
     {
         float pressureAmount = Mathf.Abs(wave.transform.position.x / Screen.width - 0.5f) * 2.0f;
-        if(pressureAmount > 0.9f)
-        {
-            Sfx.PlayGirmeyeYaklasti();
-        }
 
         Ui.UpdateAvatarReactions(wave.transform.position.x / Screen.width);
 
         if (gameState == GameState.Game)
         {
+            if (pressureAmount > 0.9f && dontPlayGirmeyeYaklasti == false)
+            {
+                Sfx.PlayGirmeyeYaklasti();
+                StartCoroutine(DontPlayGirmeyeYaklasti());
+            }
+
             wave.Tick();
             bool isPlayerOneWinner;
             if (wave.CheckLose(out isPlayerOneWinner))

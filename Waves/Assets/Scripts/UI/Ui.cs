@@ -12,9 +12,9 @@ public class Ui : MonoBehaviour
 
     public Transform Root;
 
-    public Text CountdownText;
+    public Image CountdownText;
     public GameObject WheelParent;
-    public Text BuKimeGirsinText;
+    public Image BuKimeGirsinText;
     public GameObject WaveObject;
     public GameObject WheelArrow;
     public GameObject PlayerOneBonusSequence;
@@ -38,14 +38,20 @@ public class Ui : MonoBehaviour
     public GameObject GameOverPanel;
     public Text WinnerText;
     public GameObject PressSpaceText;
+    public Image sagdakineGirdiImage;
+    public Image soldakineGirdiImage;
+    public Image pressSpaceImage;
 
     [Header("Avatar Reactions")]
     public Image Player1Avatar;
     public Image Player2Avatar;
-
     public Sprite[] Player1Reactions = new Sprite[3];
     public Sprite[] Player2Reactions = new Sprite[3];
 
+    [Header("CountDown Images")]
+    public Sprite[] countdownSprites = new Sprite[4];
+
+        
     private bool _isWaitingForResetKey;
 
     public void GameOver(bool isPlayerOneWinner)
@@ -55,6 +61,16 @@ public class Ui : MonoBehaviour
         if(isSafeMode)
         {
             WinnerText.text = isPlayerOneWinner ? "SOLDAKİ KAZANDI" : "SAĞDAKİ KAZANDI";
+        }
+        if(isPlayerOneWinner)
+        {
+            sagdakineGirdiImage.gameObject.SetActive(true);
+            soldakineGirdiImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            sagdakineGirdiImage.gameObject.SetActive(false);
+            soldakineGirdiImage.gameObject.SetActive(true);
         }
         StartCoroutine(MoveHasirt());
         StartCoroutine(WaitAndEnableRestart());

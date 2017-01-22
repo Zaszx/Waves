@@ -69,15 +69,6 @@ public class Wheel
         var imageTargetPosition = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
         ui.BuKimeGirsinText.gameObject.SetActive(true);
 
-        if(ui.isSafeMode)
-        {
-            ui.BuKimeGirsinText.text = "HAZIR";
-        }
-        else
-        {
-            ui.BuKimeGirsinText.text = "Bu Kime Girsin?";
-        }
-
         while(accumulatedTime < selectedLerpTime)
         {
             var tText = ui.BuKimeGirsinTextFocusCurve.Evaluate(accumulatedTime / selectedLerpTime);
