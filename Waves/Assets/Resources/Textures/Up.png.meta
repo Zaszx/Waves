@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 94add4248efc5bf429b206a30598eaaf
-timeCreated: 1484949004
-licenseType: Pro
+timeCreated: 1485045048
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 4
@@ -59,6 +59,14 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
+    maxTextureSize: 32
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
     maxTextureSize: 32
     textureFormat: -1
     textureCompression: 1

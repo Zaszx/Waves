@@ -84,12 +84,13 @@ public class GameManager : MonoBehaviour
         for (int i = 3; i > 0; i--)
         {
             float accumulatedTime = 0;
+            Ui.CountdownText.sprite = Ui.countdownSprites[i];
+            Ui.CountdownText.SetNativeSize();
+
             var initSize = Ui.CountdownText.rectTransform.sizeDelta;
             var targetSize = Ui.CountdownText.rectTransform.sizeDelta / 10f;
             while (accumulatedTime < totalTime)
             {
-                Ui.CountdownText.sprite = Ui.countdownSprites[i];
-
                 var t = Ui.CountdownTextSizeCurve.Evaluate(accumulatedTime / totalTime);
                 Ui.CountdownText.rectTransform.sizeDelta = Vector2.Lerp(initSize, targetSize, t);
 
@@ -102,6 +103,8 @@ public class GameManager : MonoBehaviour
         SwitchState(GameState.Game);
 
         Ui.CountdownText.sprite = Ui.countdownSprites[0];
+        Ui.CountdownText.SetNativeSize();
+
         yield return new WaitForSeconds(1.0f);
         Ui.CountdownText.gameObject.SetActive(false);
     }
