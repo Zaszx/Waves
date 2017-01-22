@@ -7,6 +7,7 @@ public enum GameState
     Wheel,
     Countdown,
     Game,
+    Giris,
     GameOver,
 }
 
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     private bool _enterBonusSuccOnce = true;
 
     public bool dontPlayGirmeyeYaklasti = false;
+
+    public bool isPlayerOneWinner = false;
 
 	void Start ()
     {
@@ -60,6 +63,10 @@ public class GameManager : MonoBehaviour
         else if(gameState == GameState.Wheel)
         {
             StartCoroutine(SpinWheel());
+        }
+        else if(gameState == GameState.Giris)
+        {
+            StartCoroutine(PlayGirisCoroutine());
         }
         else if(gameState == GameState.Game)
         {
@@ -134,8 +141,9 @@ public class GameManager : MonoBehaviour
             bool isPlayerOneWinner;
             if (wave.CheckLose(out isPlayerOneWinner))
             {
-                Sfx.PlayGirdi();
-                StartCoroutine(ScreenShake(isPlayerOneWinner));
+                //Sfx.PlayGirdi();
+                this.isPlayerOneWinner = isPlayerOneWinner;
+                SwitchState(GameState.Giris);
                 //bonusSequence.Clear();
                 //SwitchState(GameState.GameOver);
                 //Ui.GameOver(isPlayerOneWinner);
@@ -205,7 +213,45 @@ public class GameManager : MonoBehaviour
         }
 
 	}
-    
+
+    public IEnumerator PlayGirisCoroutine()
+    {
+        wave.gameObject.SetActive(true);
+        float totalTime = 1.5f;
+        float accumulatedTime = 0.0f;
+
+        Vector3 girisPosition = wave.transform.position;
+
+        Vector3 waveInitialPosition = wave.transform.position;
+        Vector3 waveTargetPosition = new Vector3(Screen.width * 0.5f, waveInitialPosition.y, waveInitialPosition.z);
+        while(accumulatedTime < totalTime)
+        {
+            float percentage = Ui.GirisGeriAlmaCurve.Evaluate(accumulatedTime / totalTime);
+            wave.transform.position = Vector3.Lerp(waveInitialPosition, waveTargetPosition, percentage);
+
+            yield return new WaitForEndOfFrame();
+            accumulatedTime = accumulatedTime + Time.deltaTime;
+        }
+
+        accumulatedTime = 0.0f;
+        totalTime = 0.5f;
+
+        waveInitialPosition = wave.transform.position;
+        waveTargetPosition = girisPosition;
+        while (accumulatedTime < totalTime)
+        {
+            float percentage = Ui.GirisCurve.Evaluate(accumulatedTime / totalTime);
+            wave.transform.position = Vector3.Lerp(waveInitialPosition, waveTargetPosition, percentage);
+
+            yield return new WaitForEndOfFrame();
+            accumulatedTime = accumulatedTime + Time.deltaTime;
+        }
+
+        Sfx.PlayGirdi();
+
+        StartCoroutine(ScreenShake(isPlayerOneWinner));
+    }
+
     void HandleInputResult(InputResult result)
     {
         if(result.inputResultState == InputResultState.Correct)
@@ -229,8 +275,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ScreenShake(bool isPlayerOneWinner)
     {
-        SwitchState(GameState.GameOver);
-
         const float duration = 2f;
         var magnitude = 10f;
         var initPos = Ui.Root.position;
@@ -245,6 +289,8 @@ public class GameManager : MonoBehaviour
         Ui.Root.position = initPos;
 
         bonusSequence.Clear();
+        SwitchState(GameState.GameOver);
+
         Ui.GameOver(isPlayerOneWinner);
     }
 }

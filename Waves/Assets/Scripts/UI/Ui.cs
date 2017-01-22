@@ -32,6 +32,8 @@ public class Ui : MonoBehaviour
     public AnimationCurve BuKimeGirsinTextDefocusCurve;
     public AnimationCurve SelectedItemDefocusCurve;
     public AnimationCurve HasirtCurve;
+    public AnimationCurve GirisGeriAlmaCurve;
+    public AnimationCurve GirisCurve;
 
     [Header("Game over things")]
     public Transform HasirtText;
