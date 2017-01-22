@@ -93,7 +93,7 @@ public class Wheel
 
         var waveObjectImage = ui.WaveObject.GetComponent<Image>();
         var selectedImgSize = selectedImage.rectTransform.sizeDelta;
-        var waveObjectSize = waveObjectImage.rectTransform.sizeDelta;
+        var waveObjectSize = selectedImgSize * 0.3f;
         while (accumulatedTime < selectedLerpTime)
         {
             var tText = ui.BuKimeGirsinTextDefocusCurve.Evaluate(accumulatedTime / selectedLerpTime);
@@ -111,6 +111,7 @@ public class Wheel
         yield return new WaitForSeconds(0.5f);
 
         ui.WaveObject.GetComponent<Image>().sprite = selectedImage.sprite;
+        ui.WaveObject.GetComponent<Image>().rectTransform.sizeDelta = waveObjectSize;
 
         GameObject.Destroy(selectedImage.gameObject);
 
