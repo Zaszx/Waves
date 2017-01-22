@@ -23,6 +23,7 @@ public static class Prefabs
             Resources.Load<GameObject>("Prefabs/Tokmak"),
             Resources.Load<GameObject>("Prefabs/WalkingCane"),
             Resources.Load<GameObject>("Prefabs/Zopa"),
+            Resources.Load<GameObject>("Prefabs/Kol"),
         };
     }
 }
